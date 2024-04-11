@@ -1,0 +1,30 @@
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches
+*.cache
+*.log
+
+.env
+
+/static/
+
+# Media files
+/media/
+
+/venv/
+*.venv/
+
+# Database
+*.sqlite3
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
