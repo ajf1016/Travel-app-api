@@ -1,4 +1,5 @@
 import requests
+import json
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -26,11 +27,14 @@ def create_user(request):
         host = request.get_host()
         login_url = protocol + host + '/api/v1/auth/token/'
 
-        creadentials = f'"username" : "{username}","email" : "{
-            email}","password" : "{password}"'
-        data = "{"+creadentials+"}"
+        data = {
+            "username": username,
+            "password": password,
+            "email": email,
+        }
 
-        response = requests.post(login_url, headers=headers, data=data)
+        response = requests.post(
+            login_url, headers=headers, data=json.dumps(data))
         if response.status_code == 200:
             response_data = {
                 "status_code": 6000,
