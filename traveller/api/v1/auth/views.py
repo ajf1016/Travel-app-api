@@ -1,3 +1,4 @@
+import requests
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -15,11 +16,34 @@ def create_user(request):
         User.objects.create_user(
             email=email, password=password, username=username)
 
-        response_data = {
-            "status_code": 6000,
-            "message": "User cretaed successfully",
+        headers = {
+            'content-type': 'application/json',
         }
-        return Response(response_data)
+
+        protocol = 'http://'
+        if request.is_secure():
+            protocol = 'https://'
+        host = request.get_host()
+        login_url = protocol + host + '/api/v1/auth/token/'
+
+        creadentials = f'"username" : "{username}","email" : "{
+            email}","password" : "{password}"'
+        data = "{"+creadentials+"}"
+
+        response = requests.post(login_url, headers=headers, data=data)
+        if response.status_code == 200:
+            response_data = {
+                "status_code": 6000,
+                "message": "User cretaed successfully",
+                "data": response.json(),
+            }
+            return Response(response_data)
+        else:
+            response_data = {
+                "status_code": 6001,
+                "message": "An error occured while creating user. Please try again later.",
+            }
+            return Response(response_data)
     else:
         response_data = {
             "status_code": 6001,
