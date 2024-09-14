@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth.models import User
 
 
+#apis
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def create_user(request):
