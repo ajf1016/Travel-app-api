@@ -11,7 +11,7 @@ __pycache__/
 
 /static/
 
-# Media files
+# Media files.
 /media/
 
 /venv/
