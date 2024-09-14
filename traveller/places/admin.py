@@ -2,7 +2,7 @@ from django.contrib import admin
 from places.models import *
 
 
-
+#models
 class  GalleryAdmin(admin.TabularInline):
     list_display = ['place', 'image']
     model = Gallery
